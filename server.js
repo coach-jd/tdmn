@@ -38,18 +38,6 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 // Ruta para manejar las solicitudes preflight (OPTIONS), necesarias en CORS
 app.options("*", cors());
 
-// Implementación de autenticación básica para proteger la ruta de envío de correos
-// Este middleware verifica un token de autenticación en los encabezados de la solicitud
-app.use((req, res, next) => {
-  const specialToken = req.headers["authorization"]?.split(" ")[1];
-  console.log("Token recibido:", specialToken); // Verificar el token recibido
-  if (authToken === process.env.SPECIAL_TOKEN) {
-    next(); // Si el token es válido, continúa con la solicitud
-  } else {
-    return res.status(403).json({ message: "No autorizado" });
-  }
-});
-
 // Ruta para enviar correos electrónicos con un PDF adjunto
 app.post("/send-email", async (req, res) => {
   const { pdfBase64, name, email } = req.body;
