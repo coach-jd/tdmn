@@ -41,8 +41,8 @@ app.options("*", cors());
 // Implementación de autenticación básica para proteger la ruta de envío de correos
 // Este middleware verifica un token de autenticación en los encabezados de la solicitud
 app.use((req, res, next) => {
-  const authToken = req.headers["authorization"]?.split(" ")[1];
-  console.log("Token recibido:", authToken); // Verificar el token recibido
+  const specialToken = req.headers["authorization"]?.split(" ")[1];
+  console.log("Token recibido:", specialToken); // Verificar el token recibido
   if (authToken === process.env.SPECIAL_TOKEN) {
     next(); // Si el token es válido, continúa con la solicitud
   } else {

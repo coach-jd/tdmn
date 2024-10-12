@@ -220,6 +220,9 @@ function generateReport() {
   userData.innerHTML = `
     <p><strong>Nombre:</strong> ${formData.get("nombre_apellido")}</p>
     <p><strong>Correo Electrónico:</strong> ${formData.get("correo")}</p>
+    <p><strong>Celular:</strong> ${formData.get(
+      "celular"
+    )}</p> <!-- Añadido el número de celular -->
     <p><strong>País:</strong> ${formData.get("pais")}</p>
     <p><strong>Nombre del Emprendimiento:</strong> ${formData.get(
       "nombre_startup"
@@ -415,6 +418,7 @@ function validateForm() {
     .querySelector('input[name="nombre_apellido"]')
     .value.trim(); // Obtiene el valor del campo "Nombre"
   const correo = document.querySelector('input[name="correo"]').value.trim(); // Obtiene el valor del campo "Correo"
+  const celular = document.querySelector('input[name="celular"]').value.trim(); // Obtiene el valor del campo "Celular"
   const pais = document.querySelector('input[name="pais"]').value.trim(); // Obtiene el valor del campo "País"
   const nombreStartup = document
     .querySelector('input[name="nombre_startup"]')
@@ -434,6 +438,13 @@ function validateForm() {
   const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!correoRegex.test(correo)) {
     mostrarModalError("Por favor, introduce un correo electrónico válido.");
+    return false; // Si no cumple, retorna falso
+  }
+
+  // Verificar que el número de celular sea válido (puede incluir dígitos, espacios, guiones y un + opcional al inicio)
+  const celularRegex = /^\+?[0-9\s-]{7,15}$/;
+  if (!celularRegex.test(celular)) {
+    mostrarModalError("Por favor, introduce un número de celular válido.");
     return false; // Si no cumple, retorna falso
   }
 
@@ -469,6 +480,7 @@ function validateForm() {
   if (
     nombre === "" ||
     correo === "" ||
+    celular === "" ||
     pais === "" ||
     nombreStartup === "" ||
     descripcion === ""
@@ -526,6 +538,7 @@ function generatePDF() {
   const formData = new FormData(initialForm); // Obtiene los datos del formulario inicial
   const userName = formData.get("nombre_apellido"); // Obtiene el nombre del usuario
   const userEmail = formData.get("correo"); // Obtiene el correo del usuario
+  const userCell = formData.get("celular"); // Obtiene el número de celular del usuario
   const userCountry = formData.get("pais"); // Obtiene el país del usuario
   const startupName = formData.get("nombre_startup"); // Obtiene el nombre de la startup
   const startupDescription = formData.get("descripcion_startup"); // Obtiene la descripción de la startup
@@ -550,11 +563,12 @@ function generatePDF() {
   doc.setFont("helvetica", "normal"); // Fuente normal
   doc.text(`Nombre: ${userName}`, 40, 100); // Añade el nombre
   doc.text(`Correo: ${userEmail}`, 40, 120); // Añade el correo
-  doc.text(`País: ${userCountry}`, 40, 140); // Añade el país
-  doc.text(`Nombre de la Startup: ${startupName}`, 40, 160); // Añade el nombre de la startup
+  doc.text(`Celular: ${userCell}`, 40, 140); // Añade el número de celular
+  doc.text(`País: ${userCountry}`, 40, 160); // Añade el país
+  doc.text(`Nombre de la Startup: ${startupName}`, 40, 180); // Añade el nombre de la startup
 
   // Descripción con control de línea y justificada
-  const descriptionY = 180; // Coordenada Y para la descripción
+  const descriptionY = 200; // Coordenada Y para la descripción
   const descriptionMaxWidth = pageWidth - 80; // Ancho máximo de la descripción
   const descriptionLines = doc.splitTextToSize(
     startupDescription,
