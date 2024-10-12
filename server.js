@@ -43,7 +43,7 @@ app.options("*", cors());
 app.use((req, res, next) => {
   const authToken = req.headers["authorization"]?.split(" ")[1];
   console.log("Token recibido:", authToken); // Verificar el token recibido
-  if (authToken === process.env.AUTH_TOKEN) {
+  if (authToken === process.env.MY_AUTH_TOKEN) {
     next(); // Si el token es válido, continúa con la solicitud
   } else {
     return res.status(403).json({ message: "No autorizado" });
