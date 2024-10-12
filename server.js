@@ -31,6 +31,14 @@ app.use(
   })
 );
 
+// Sirve el archivo index.html cuando se accede a la raíz
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// Sirve los archivos estáticos desde la carpeta 'public'
+app.use(express.static(path.join(__dirname, "public")));
+
 // Middleware para parsear las solicitudes JSON y URL-encoded con un límite de 50MB
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
