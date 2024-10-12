@@ -98,7 +98,7 @@ function showCategory(index) {
 
   // Crear y añadir la imagen centrada
   const imgElement = document.createElement("img");
-  imgElement.src = `assets/categorias_dmn/categoria${index}.svg`; // Asigna la ruta dinámica
+  imgElement.src = `categorias_dmn/categoria${index}.svg`; // Asigna la ruta dinámica
   imgElement.alt = `Imagen de la categoría ${category.nombre}`;
   imgElement.style.width = "200px";
   imgElement.style.height = "200px";
@@ -712,7 +712,8 @@ function sendPDFByEmail(pdfBase64, userName, userEmail) {
   fetch(`${baseUrl}/send-email`, {
     method: "POST", // Método HTTP POST
     headers: {
-      "Content-Type": "application/json", // Encabezado del tipo de contenido
+      "Content-Type": "application/json",
+      Authorization: "Bearer j35us_d1a5", // Añadir el token de autenticación aquí
     },
     body: JSON.stringify({
       email: userEmail, // Correo del usuario

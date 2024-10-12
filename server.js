@@ -20,13 +20,14 @@ const PORT = process.env.PORT || 3000; // Puerto por defecto es 3000 si no hay u
 app.use(
   cors({
     origin: [
-      "http://localhost:5500", // Orígenes permitidos en desarrollo local
-      "http://127.0.0.1:5500", // Origen local con IP
+      "http://localhost:5500",
+      "http://127.0.0.1:5500",
+      "http://localhost:3000", // Añadir esto si estás haciendo la solicitud desde el puerto 3000 en local
       "https://waymentorlatam.com", // Dominio de producción
     ],
-    methods: ["GET", "POST", "OPTIONS"], // Métodos HTTP permitidos
-    allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
-    credentials: true, // Permite el uso de cookies y autenticación basada en sesiones
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 
@@ -40,11 +41,12 @@ app.options("*", cors());
 // Implementación de autenticación básica para proteger la ruta de envío de correos
 // Este middleware verifica un token de autenticación en los encabezados de la solicitud
 app.use((req, res, next) => {
-  const authToken = req.headers["authorization"];
+  const authToken = req.headers["authorization"]?.split(" ")[1];
+  console.log("Token recibido:", authToken); // Verificar el token recibido
   if (authToken === process.env.AUTH_TOKEN) {
     next(); // Si el token es válido, continúa con la solicitud
   } else {
-    return res.status(403).json({ message: "No autorizado" }); // Devuelve un error 403 si el token no es válido
+    return res.status(403).json({ message: "No autorizado" });
   }
 });
 
