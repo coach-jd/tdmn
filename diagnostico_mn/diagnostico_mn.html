@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diagnóstico del Modelo de Negocio</title>
+    <!-- Enlace al archivo de estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Inclusión de la biblioteca Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Inclusión de la biblioteca jsPDF para generación de PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <!-- Script principal del módulo -->
+    <script type="module" src="js/scripts.js"></script>
+  </head>
+
+  <body>
+    <!-- Barra de progreso -->
+    <div class="progress-bar">
+      <div id="progress" style="width: 0%"></div>
+    </div>
+
+    <!-- Contenedor del formulario inicial -->
+    <div class="container form-container">
+      <h2>Diagnóstico del Modelo de Negocio</h2>
+      <form id="initial-form">
+        <input
+          type="text"
+          name="nombre_apellido"
+          placeholder="Nombre y Apellido"
+          required
+        />
+        <input
+          type="email"
+          name="correo"
+          placeholder="Correo Electrónico"
+          required
+        />
+        <input type="text" name="pais" placeholder="País" required />
+        <input
+          type="text"
+          name="nombre_startup"
+          placeholder="Nombre de la Startup"
+          required
+        />
+        <textarea
+          name="descripcion_startup"
+          id="descripcion_startup"
+          placeholder="Descripción de la Startup (máximo 50 palabras)"
+          rows="4"
+          required
+        ></textarea>
+        <!-- Contador de palabras para la descripción -->
+        <div id="word-count" class="word-count">0/50 palabras</div>
+        <button type="submit">Comenzar diagnóstico</button>
+      </form>
+    </div>
+
+    <!-- Contenedor de las preguntas -->
+    <div
+      class="container question-container"
+      id="question-container"
+      style="display: none"
+    >
+      <h2 id="category-title"></h2>
+      <form id="question-form">
+        <div id="questions"></div>
+        <div class="navigation-buttons">
+          <button type="button" id="prev-button" style="display: none">
+            Anterior
+          </button>
+          <button type="button" id="next-button" style="display: none">
+            Siguiente
+          </button>
+          <button type="submit" id="submit-button" style="display: none">
+            Enviar respuestas
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Contenedor para los resultados e informes -->
+    <div class="container" id="report-container" style="display: none"></div>
+  </body>
+</html>

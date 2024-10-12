@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diagnóstico del Modelo de Negocio</title>
+    <!-- Enlace al archivo de estilos CSS -->
+    <link rel="stylesheet" href="css/styles_tdmn.css" />
+
+    <!-- Incluimos Bootstrap para el modal -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <!-- Inclusión de la biblioteca Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Inclusión de la biblioteca jsPDF para generación de PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+    <!-- Icono de la página -->
+    <link rel="icon" href="icon_wml.svg" type="image/x-icon" />
+
+    <!-- Enlace a la biblioteca de Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      crossorigin="anonymous" />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-QVKSFQ0ZCD"></script>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-QVKSFQ0ZCD");
+    </script>
+  </head>
+
+  <body>
+    <!-- Barra de progreso -->
+    <div class="progress-bar">
+      <div id="progress" style="width: 0%"></div>
+    </div>
+
+    <!-- Modal de confirmación de envío -->
+
+    <div
+      class="modal fade"
+      id="instructionModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">
+              Instrucciones para completar el diagnóstico
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Contenido largo para scroll -->
+            <p>
+              A continuación, te mostramos una serie de afirmaciones que
+              describen de manera general un Modelo de Negocios:
+            </p>
+            <ul>
+              <li>
+                Lee cada afirmación con atención y utiliza el control deslizante
+                para seleccionar el valor que mejor describa tu nivel de acuerdo
+                o desacuerdo.
+              </li>
+              <li>
+                La escala va del 1 al 7, donde:
+                <ul>
+                  <li>1: Totalmente en desacuerdo</li>
+                  <li>2: En desacuerdo</li>
+                  <li>3: Algo en desacuerdo</li>
+                  <li>4: Neutral / Ni de acuerdo ni en desacuerdo</li>
+                  <li>5: Algo de acuerdo</li>
+                  <li>6: De acuerdo</li>
+                  <li>7: Totalmente de acuerdo</li>
+                </ul>
+              </li>
+              <li>
+                A medida que completes las afirmaciones, podrás ver el valor
+                seleccionado en el centro del control deslizante. El valor
+                seleccionado será mostrado entre paréntesis y con una
+                descripción lingüística.
+              </li>
+              <li>
+                Observa tu progreso mediante la barra que indicará el avance en
+                el test.
+              </li>
+              <li>
+                Revisa tus respuestas y, una vez satisfecho, presiona "Enviar"
+                para generar tu informe.
+              </li>
+              <li>
+                Al finalizar, podrás descargar tu informe y recibirás una copia
+                en tu correo electrónico.
+              </li>
+            </ul>
+            <p>
+              Para cualquier duda o asistencia, contacta con el equipo de
+              soporte de WayMentor Latam.
+            </p>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="startDiagnosisButtonModal">
+              Comenzar diagnóstico
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+
+    <!-- Modal para mostrar el mensaje de cada categoría -->
+    <div
+      class="modal fade"
+      id="categoryMessageModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="categoryMessageModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="categoryMessageModalLabel">Mensaje</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Aquí se mostrará dinámicamente el mensaje de la categoría -->
+            <p id="categoryMessageContent"></p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              id="modalCloseButton">
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenedor del formulario inicial -->
+    <div class="container form-container">
+      <h2>Diagnóstico del Modelo de Negocio</h2>
+      <form id="initial-form">
+        <!-- Nombre y Apellido -->
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-user"></i>
+          </span>
+          <input
+            type="text"
+            name="nombre_apellido"
+            class="form-control"
+            placeholder="Nombre y Apellido"
+            required />
+        </div>
+
+        <!-- Correo Electrónico -->
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <input
+            type="email"
+            name="correo"
+            class="form-control"
+            placeholder="Correo Electrónico"
+            required />
+        </div>
+
+        <!-- País -->
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-globe"></i>
+          </span>
+          <input
+            type="text"
+            name="pais"
+            class="form-control"
+            placeholder="País"
+            required />
+        </div>
+
+        <!-- Nombre de la Startup -->
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-building"></i>
+          </span>
+          <input
+            type="text"
+            name="nombre_startup"
+            class="form-control"
+            placeholder="Nombre del Emprendimiento"
+            required />
+        </div>
+
+        <!-- Descripción de la Startup -->
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-align-left"></i>
+          </span>
+          <textarea
+            name="descripcion_startup"
+            id="descripcion_startup"
+            class="form-control"
+            placeholder="Descripción del Emprendimiento (máximo 80 palabras)
+            ¿Qué vendes? ¿A quién le vendes? ¿Cómo lo haces diferente?"
+            rows="8"
+            required></textarea>
+        </div>
+
+        <!-- Contador de palabras para la descripción -->
+        <div id="word-count" class="word-count">0/80 palabras</div>
+
+        <!-- Botón de comenzar diagnóstico -->
+        <button type="button" id="startDiagnosisButton">
+          Comenzar diagnóstico
+        </button>
+      </form>
+    </div>
+
+    <!-- Modal de error genérico -->
+    <div
+      class="modal fade"
+      id="errorModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="errorModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="errorModalLabel">Error</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="errorModalBody">
+            <!-- Aquí se mostrará el mensaje de error dinámicamente -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal">
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenedor de las preguntas -->
+    <div
+      class="container question-container"
+      id="question-container"
+      style="display: none">
+      <h2 id="category-title"></h2>
+      <form id="question-form">
+        <div id="questions"></div>
+        <div class="navigation-buttons">
+          <button type="button" id="prev-button" style="display: none">
+            Anterior
+          </button>
+          <button type="button" id="next-button" style="display: none">
+            Siguiente
+          </button>
+          <button type="submit" id="submit-button" style="display: none">
+            Enviar respuestas
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Contenedor para los resultados e informes -->
+    <div class="container" id="report-container" style="display: none"></div>
+
+    <!-- Agregado -->
+
+    <!-- JavaScript de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript para gestionar el modal y el formulario -->
+
+    <!-- Script principal del módulo -->
+    <script type="module" src="js/scripts_tdmn.js" defer></script>
+  </body>
+</html>

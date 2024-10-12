@@ -1,0 +1,259 @@
+/* Estilos globales */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #FFFFFF;
+    color: #003366;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos y subtítulos */
+h1, h2 {
+    font-family: 'Archivo Black', sans-serif;
+    color: #003366;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-family: 'Roboto', sans-serif;
+    color: #003366;
+    margin-bottom: 10px;
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input, textarea {
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #A39E9E;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #003366;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #66CCFF;
+}
+
+/* Barra de progreso */
+.progress-bar {
+    width: 100%;
+    background-color: #E0E0E0;
+    height: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#progress {
+    width: 0;
+    height: 100%;
+    background-color: #66CCFF;
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+/* Contador de palabras para la descripción de la startup */
+.word-count {
+    font-size: 0.9rem;
+    color: #666666;
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+/* Mensaje de advertencia cuando se excede el límite de palabras */
+.word-count.exceeded {
+    color: red;
+    font-weight: bold;
+}
+
+/* Botones */
+button, #botonEnviar, #downloadPDF {
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button {
+    background-color: #66CCFF;
+    color: white;
+}
+
+button:hover, #botonEnviar:hover, #downloadPDF:hover {
+    background-color: #003366;
+    color: #FFFFFF;
+}
+
+/* Secciones del cuestionario y resultados */
+#quiz-section, #results-section, #respuesta-container {
+    margin-top: 20px;
+    display: none;
+}
+
+#radarChart {
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+#quiz-container {
+    background-color: #E0E0E0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#quiz-container h3 {
+    font-family: 'Archivo Black', sans-serif;
+    color: #003366;
+}
+
+#quiz-container div {
+    margin-bottom: 15px;
+}
+
+/* Estilos para los botones de selección (radio buttons) */
+input[type="radio"] + label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+input[type="radio"] + label:before {
+    content: '\f00c';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: transparent;
+}
+
+input[type="radio"]:checked + label:before {
+    color: #66CCFF;
+}
+
+input[type="radio"][value="no"] + label:before {
+    content: '\f00d';
+}
+
+/* Estilos adicionales para ajustar la interfaz */
+#respuesta-container {
+    background-color: #F8F9FA;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Mensajes de error y éxito */
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Contenedores de respuestas */
+.user-data {
+    margin-bottom: 20px;
+}
+
+.responses-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.category-div {
+    flex: 1 1 calc(50% - 20px);
+    border: 1px solid #A39E9E;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.category-div h3 {
+    font-family: 'Archivo Black', sans-serif;
+    margin-top: 0;
+}
+
+.category-div p {
+    margin: 5px 0;
+}
+
+/* Estilo para el contenedor del informe */
+.report-container {
+    font-family: 'Roboto', sans-serif;
+    color: #003366; /* Azul oscuro según el manual */
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón de generación de PDF */
+#pdf-button {
+    background-color: #66CCFF; /* Azul claro */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#pdf-button:hover {
+    background-color: #003366; /* Azul oscuro */
+    color: #FFFFFF;
+}
+
+
+/* Diseño responsivo para pantallas pequeñas */
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    button, #botonEnviar, #downloadPDF {
+        padding: 10px;
+    }
+
+    #radarChart {
+        max-width: 100%;
+    }
+
+    .category-div {
+        flex: 1 1 100%;
+    }
+}

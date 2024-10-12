@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reporte Generado</title>
+    <style>
+      .email-container {
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+      .header {
+        background-color: #003366;
+        color: white;
+        padding: 10px;
+        text-align: center;
+      }
+      .content {
+        padding: 20px;
+      }
+      .footer {
+        margin-top: 20px;
+        text-align: center;
+        color: #777;
+      }
+      .button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <!-- Cabecera del correo -->
+      <div class="header">
+        <h1>Reporte PDF Generado</h1>
+      </div>
+
+      <!-- Contenido principal del correo -->
+      <div class="content">
+        <p>Hola,</p>
+        <p>
+          Hemos generado un reporte PDF con la información proporcionada en
+          nuestro sistema.
+        </p>
+        <p>Puedes encontrar el PDF adjunto a este correo.</p>
+
+        <p>Detalles del usuario:</p>
+        <ul>
+          <li><strong>Nombre:</strong> {to_name}</li>
+          <li><strong>Correo electrónico:</strong> {to_email}</li>
+        </ul>
+
+        <!-- Si deseas agregar un botón o un enlace personalizado -->
+        <a href="https://waymentorlatam.com/" class="button"
+          >Visitar nuestro sitio</a
+        >
+      </div>
+
+      <!-- Pie de página -->
+      <div class="footer">
+        <p>Gracias por utilizar nuestro servicio.</p>
+        <p><strong>{company_name}</strong></p>
+      </div>
+    </div>
+  </body>
+</html>
