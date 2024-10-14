@@ -727,7 +727,6 @@ function sendPDFByEmail(pdfBase64, userName, userEmail) {
     method: "POST", // Método HTTP POST
     headers: {
       "Content-Type": "application/json",
-      // Authorization: "Bearer j35us_d1a5", // Añadir el token de autenticación aquí si es necesario
     },
     body: JSON.stringify({
       email: userEmail, // Correo del usuario
