@@ -17,19 +17,28 @@ const app = express();
 const PORT = process.env.PORT || 3000; // Puerto por defecto es 3000 si no hay uno en las variables de entorno
 
 // Configuración de CORS
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5500",
-      "http://127.0.0.1:5500",
-      "http://localhost:3000", // Añadir esto si estás haciendo la solicitud desde el puerto 3000 en local
-      "https://waymentorlatam.com", // Dominio de producción
-    ],
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: [
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:3000", // En caso de que estés haciendo la solicitud desde el puerto 3000 en local
+    "https://tdmn.vercel.app", // Dominio desplegado en Vercel
+    "https://waymentorlatam.com", // Dominio de producción
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
+
+// Aplica CORS a todas las rutas de la aplicación
+app.use(cors(corsOptions));
+
+// Middleware para manejar las solicitudes preflight (OPTIONS), necesarias en CORS
+app.options("*", cors(corsOptions));
+
+// Middleware para parsear las solicitudes JSON y URL-encoded con un límite de 50MB
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // Sirve el archivo index.html cuando se accede a la raíz
 app.get("/", (req, res) => {
@@ -38,13 +47,6 @@ app.get("/", (req, res) => {
 
 // Sirve los archivos estáticos desde la carpeta 'public'
 app.use(express.static(path.join(__dirname, "public")));
-
-// Middleware para parsear las solicitudes JSON y URL-encoded con un límite de 50MB
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-
-// Ruta para manejar las solicitudes preflight (OPTIONS), necesarias en CORS
-app.options("*", cors());
 
 // Ruta para enviar correos electrónicos con un PDF adjunto
 app.post("/send-email", async (req, res) => {
