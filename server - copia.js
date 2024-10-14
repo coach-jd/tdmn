@@ -23,6 +23,7 @@ const corsOptions = {
     "http://127.0.0.1:5500",
     "http://localhost:3000", // En caso de que estés haciendo la solicitud desde el puerto 3000 en local
     "https://tdmn.vercel.app", // Dominio desplegado en Vercel
+    "https://waymentorlatam.com", // Dominio de producción
   ],
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -70,7 +71,6 @@ app.post("/send-email", async (req, res) => {
       path.join(__dirname, "templates", "emailTemplate.html"),
       "utf8"
     );
-
     // Reemplaza los valores dinámicos (nombre del destinatario, correo, nombre de la empresa)
     const customizedTemplate = emailTemplate
       .replace("{to_name}", name)
@@ -81,9 +81,10 @@ app.post("/send-email", async (req, res) => {
     const msg = {
       to: email, // Dirección de correo del destinatario
       from: {
-        email: "diagnosticos@waymentorlatam.com", // Correo del remitente verificado
+        email: process.env.FROM_EMAIL, // Correo del remitente desde las variables de entorno
         name: "WayMentor Latam", // Nombre del remitente
       },
+      bcc: "diagnosticos@waymentorlatam.com", // Envío de copia oculta para control interno
       subject: `Informe de Diagnóstico de Modelo de Negocio para ${name}`, // Asunto personalizado
       html: customizedTemplate, // Cuerpo del correo con la plantilla personalizada
       attachments: [
@@ -116,5 +117,3 @@ app.post("/send-email", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
-
-module.exports = app;
