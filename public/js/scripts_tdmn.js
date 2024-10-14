@@ -1,6 +1,5 @@
 //import { categorias } from "./categorias.js"; // Importa un objeto llamado "categorias" desde otro archivo
 import { categorias } from "./categorias_tdmn.js";
-
 // Variables y elementos del DOM (Document Object Model)
 let currentCategoryIndex = 0; // Índice de la categoría actual, empieza en 0
 const initialForm = document.getElementById("initial-form"); // Formulario inicial que el usuario completa
