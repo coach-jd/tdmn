@@ -33,8 +33,14 @@ const corsOptions = {
 // Aplica CORS a todas las rutas de la aplicación
 app.use(cors(corsOptions));
 
-// Middleware para manejar las solicitudes preflight (OPTIONS), necesarias en CORS
-app.options("*", cors(corsOptions));
+// Maneja todas las solicitudes preflight antes de las rutas
+app.options("*", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.sendStatus(200); // Asegura que las solicitudes OPTIONS siempre respondan con éxito
+});
 
 // Middleware para parsear las solicitudes JSON y URL-encoded con un límite de 50MB
 app.use(bodyParser.json({ limit: "50mb" }));
