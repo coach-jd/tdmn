@@ -71,7 +71,6 @@ app.post("/send-email", async (req, res) => {
       path.join(__dirname, "templates", "emailTemplate.html"),
       "utf8"
     );
-
     // Reemplaza los valores dinámicos (nombre del destinatario, correo, nombre de la empresa)
     const customizedTemplate = emailTemplate
       .replace("{to_name}", name)
