@@ -716,17 +716,18 @@ function addGeneratePDFButton() {
 
 // Función para enviar el PDF por correo
 function sendPDFByEmail(pdfBase64, userName, userEmail) {
+  // Detecta si estamos en entorno local o en producción (Vercel)
   const baseUrl =
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1"
-      ? "http://localhost:3000"
-      : "https://waymentorlatam.com"; // Detecta si estamos en entorno local o producción
+      ? "http://localhost:3000" // Entorno local
+      : "https://tdmn.vercel.app"; // Producción en Vercel
 
   fetch(`${baseUrl}/send-email`, {
     method: "POST", // Método HTTP POST
     headers: {
       "Content-Type": "application/json",
-      //Authorization: "Bearer j35us_d1a5", // Añadir el token de autenticación aquí
+      // Authorization: "Bearer j35us_d1a5", // Añadir el token de autenticación aquí si es necesario
     },
     body: JSON.stringify({
       email: userEmail, // Correo del usuario
