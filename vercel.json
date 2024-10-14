@@ -25,7 +25,7 @@
     }
   ],
   "env": {
-    "SENDGRID_API_KEY": "@sendgrid_api_key", 
-    "FROM_EMAIL": "@from_email"
+    "SENDGRID_API_KEY": "SENDGRID_API_KEY", 
+    "FROM_EMAIL": "FROM_EMAIL"
   }
 }
